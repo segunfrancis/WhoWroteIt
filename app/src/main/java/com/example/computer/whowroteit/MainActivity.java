@@ -14,6 +14,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText mBookInput;
     private TextView mTitleText;
     private TextView mAuthorText;
+    private static final String AUTHOR = "currentAuthor";
+    private static final String TITLE = "currentTitle";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
         mBookInput = findViewById(R.id.book_input);
         mTitleText = findViewById(R.id.title_text);
         mAuthorText = findViewById(R.id.author_text);
+
+        if (savedInstanceState != null) {
+            mAuthorText.setText(savedInstanceState.getString(AUTHOR));
+            mTitleText.setText(savedInstanceState.getString(TITLE));
+        }
     }
 
     public void searchBooks(View view) {
@@ -52,5 +59,12 @@ public class MainActivity extends AppCompatActivity {
                 mTitleText.setText(R.string.no_network);
             }
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(AUTHOR, mAuthorText.getText().toString());
+        outState.putString(TITLE, mTitleText.getText().toString());
     }
 }
